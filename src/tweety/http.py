@@ -173,7 +173,7 @@ class Request:
         cookies = await self.remove_cookies()
         if not self._transaction:
             home_page_html = await self.get_home_html()
-            self._transaction = TransactionGenerator(home_page_html)
+            self._transaction = await asyncio.to_thread(TransactionGenerator, home_page_html)
 
         if not self._guest_token:
             self._guest_token = await self._get_guest_token()
@@ -263,7 +263,7 @@ class Request:
         if headers.get("authorization"):
             del headers["authorization"]
         try:
-            response = await self._session.request(method="GET", url="https://x.com/?mx=2", headers=headers)
+            response = await self._session.request(method="GET", url="https://x.com/home", headers=headers)
 
             if response.status_code not in range(200, 300):
                 response = await self._session.request(method="GET", url=self._builder.URL_HOME_PAGE, headers=headers)

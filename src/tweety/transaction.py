@@ -43,11 +43,11 @@ def interpolate(from_list: List[Union[float, int]], to_list: List[Union[float, i
 
 
 def interpolate_num(from_val: List[Union[float, int]], to_val: List[Union[float, int]], f: Union[float, int]):
-    if all([isinstance(number, (int, float)) for number in [from_val, to_val]]):
-        return from_val * (1 - f) + to_val * f
-
     if all([isinstance(number, bool) for number in [from_val, to_val]]):
         return from_val if f < 0.5 else to_val
+
+    if all([isinstance(number, (int, float)) for number in [from_val, to_val]]):
+        return from_val * (1 - f) + to_val * f
 
 
 def convert_rotation_to_matrix(rotation: Union[float, int]):
